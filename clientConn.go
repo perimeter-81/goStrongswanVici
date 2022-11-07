@@ -103,7 +103,6 @@ func (c *ClientConn) readResponse() segment {
 func (c *ClientConn) RegisterEvent(name string, handler func(response map[string]interface{})) (err error) {
 	c.lock.Lock()
 	if c.eventHandlers[name] != nil {
-		delete(c.eventHandlers, name)
 		c.lock.Unlock()
 
 		return fmt.Errorf("[event %s] registered an event twice - released existing handler lock", name)
