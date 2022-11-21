@@ -159,8 +159,8 @@ func (c *ClientConn) UnregisterEvent(name string) (err error) {
 	outMsg := c.readResponse()
 
 	// fmt.Printf("UnregisterEvent %#v\n", outMsg)
+	c.lock.Lock()
 	if c.lastError != nil {
-		c.lock.Lock()
 		delete(c.eventHandlers, name)
 		c.lock.Unlock()
 
@@ -168,7 +168,6 @@ func (c *ClientConn) UnregisterEvent(name string) (err error) {
 			name, outMsg.typ, outMsg.msg, c.lastError)
 	}
 
-	c.lock.Lock()
 	delete(c.eventHandlers, name)
 	c.lock.Unlock()
 
