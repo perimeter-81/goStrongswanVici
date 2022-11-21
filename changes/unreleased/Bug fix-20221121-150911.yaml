@@ -1,7 +1,0 @@
-kind: Bug fix
-body: Release lock from eventHandler map. Defer de-register on list-conn and list-sa
-  events. Add return msg's from events
-time: 2022-11-21T15:09:11.79469+02:00
-custom:
-  JiraID: "19112"
-  PR: "3"
