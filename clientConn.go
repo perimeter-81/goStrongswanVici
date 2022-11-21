@@ -144,24 +144,23 @@ func (c *ClientConn) RegisterEvent(name string, handler func(response map[string
 }
 
 func (c *ClientConn) UnregisterEvent(name string) (err error) {
-	c.lock.Lock()
 	err = writeSegment(c.conn, segment{
 		typ:  stEVENT_UNREGISTER,
 		name: name,
 	})
 	if err != nil {
+		c.lock.Lock()
 		delete(c.eventHandlers, name)
 		c.lock.Unlock()
 
 		return fmt.Errorf("[event %s] failed to write event unregister. error: %w", name, err)
 	}
 
-	c.lock.Unlock()
 	outMsg := c.readResponse()
-	c.lock.Lock()
 
 	// fmt.Printf("UnregisterEvent %#v\n", outMsg)
 	if c.lastError != nil {
+		c.lock.Lock()
 		delete(c.eventHandlers, name)
 		c.lock.Unlock()
 
@@ -169,6 +168,7 @@ func (c *ClientConn) UnregisterEvent(name string) (err error) {
 			name, outMsg.typ, outMsg.msg, c.lastError)
 	}
 
+	c.lock.Lock()
 	delete(c.eventHandlers, name)
 	c.lock.Unlock()
 
