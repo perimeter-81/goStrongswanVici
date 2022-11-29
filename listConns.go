@@ -9,9 +9,9 @@ func (c *ClientConn) ListConns(ike string) (conns []map[string]IKEConf, err erro
 	var eventErr error
 
 	defer func() {
-		err = c.UnregisterEvent("list-conn")
-		if err != nil {
-			err = fmt.Errorf("error unregistering list-conns event: %v", err)
+		errUnregister := c.UnregisterEvent("list-conn")
+		if errUnregister != nil {
+			err = fmt.Errorf("error unregistering list-conns event: %v. original error: %v", errUnregister, err)
 		}
 	}()
 
