@@ -63,7 +63,7 @@ type segment struct {
 	msg  map[string]interface{}
 }
 
-//msg 在内部以下列3种类型表示(降低复杂度)
+// msg 在内部以下列3种类型表示(降低复杂度)
 // string
 // map[string]interface{}
 // []string
@@ -93,13 +93,13 @@ func writeSegment(w io.Writer, msg segment) (err error) {
 	//写长度
 	err = binary.Write(w, binary.BigEndian, uint32(buf.Len()))
 	if err != nil {
-		fmt.Printf("[writeSegment] error writing to binary \n")
+		fmt.Printf("[writeSegment] error writing to binary: %v \n", err)
 		return
 	}
 
 	_, err = buf.WriteTo(w)
 	if err != nil {
-		fmt.Printf("[writeSegment] error writing to buffer \n")
+		fmt.Printf("[writeSegment] error writing to buffer: %v \n", err)
 		return
 	}
 
@@ -141,7 +141,7 @@ func readSegment(inR io.Reader) (msg segment, err error) {
 	return
 }
 
-//一个字节长度的字符串
+// 一个字节长度的字符串
 func writeString1(w *bytes.Buffer, s string) (err error) {
 	length := len(s)
 	if length > 255 {
@@ -165,7 +165,7 @@ func readString1(r *bufio.Reader) (s string, err error) {
 	return string(buf), nil
 }
 
-//两个字节长度的字符串
+// 两个字节长度的字符串
 func writeString2(w *bytes.Buffer, s string) (err error) {
 	length := len(s)
 	if length > 65535 {
@@ -250,7 +250,7 @@ func writeMap(w *bytes.Buffer, msg map[string]interface{}) (err error) {
 	return nil
 }
 
-//SECTION_START has been read already.
+// SECTION_START has been read already.
 func readKeyMap(r *bufio.Reader) (key string, msg map[string]interface{}, err error) {
 	key, err = readString1(r)
 	if err != nil {
@@ -260,7 +260,7 @@ func readKeyMap(r *bufio.Reader) (key string, msg map[string]interface{}, err er
 	return
 }
 
-//LIST_START has been read already.
+// LIST_START has been read already.
 func readKeyList(r *bufio.Reader) (key string, msg []string, err error) {
 	key, err = readString1(r)
 	if err != nil {
@@ -289,7 +289,7 @@ func readKeyList(r *bufio.Reader) (key string, msg []string, err error) {
 	return
 }
 
-//KEY_VALUE has been read already.
+// KEY_VALUE has been read already.
 func readKeyString(r *bufio.Reader) (key string, msg string, err error) {
 	key, err = readString1(r)
 	if err != nil {
@@ -318,7 +318,7 @@ func getNewKeyToHandleDuplicates(key string, msg map[string]interface{}) string 
 	}
 }
 
-//SECTION_START has been read already.
+// SECTION_START has been read already.
 func readMap(r *bufio.Reader, isRoot bool) (msg map[string]interface{}, err error) {
 	msg = map[string]interface{}{}
 	for {
