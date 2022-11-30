@@ -1,6 +1,0 @@
-kind: Bug fix
-body: Improve printing errors in listConn and msg
-time: 2022-11-30T11:54:03.282345+02:00
-custom:
-  JiraID: "20072"
-  PR: "4"
