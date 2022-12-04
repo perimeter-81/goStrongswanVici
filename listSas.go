@@ -105,9 +105,13 @@ func (c *ClientConn) ListSas(ike string, ike_id string) (sas []map[string]IkeSa,
 	var eventErr error
 
 	defer func() {
-		err = c.UnregisterEvent("list-sa")
-		if err != nil {
-			err = fmt.Errorf("error unregistering list-sa event: %v", err)
+		errUnregister := c.UnregisterEvent("list-sa")
+		if errUnregister != nil {
+			if err != nil {
+				err = fmt.Errorf("error unregistering list-sa event: %v. original error: %w", errUnregister, err)
+				return
+			}
+			err = fmt.Errorf("error unregistering list-sa event: %w", errUnregister)
 		}
 	}()
 
