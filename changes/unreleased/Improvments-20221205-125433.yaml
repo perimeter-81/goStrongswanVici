@@ -1,0 +1,6 @@
+kind: Improvments
+body: Improve returned error in defer in listSas
+time: 2022-12-05T12:54:33.167853+02:00
+custom:
+  JiraID: "20205"
+  PR: "6"
