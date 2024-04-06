@@ -1,0 +1,28 @@
+version: '3.17'
+services:
+  strongswan:
+    image: strongswan
+    build:
+      context: strongswan
+    ports:
+      - "500:500/udp"
+      - "4500:4500/udp"
+      - "1701:1701/udp"
+      - "8555:8555"
+    privileged: true
+    volumes:
+      - "./charondata/run:/var/run"
+    entrypoint: ["/bin/bash", "-c", "ipsec start --nofork && sleep 5 && tail -f /var/log/charon.log"]
+
+  app:
+    build: app
+    volumes:
+      - ".:/app"
+      - "./charondata:/var/run"
+    depends_on:
+      - strongswan
+    entrypoint: [ "/bin/bash"]
+
+volumes:
+  charondata:
+

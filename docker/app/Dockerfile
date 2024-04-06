@@ -2,6 +2,6 @@
 FROM golang:latest
 
 WORKDIR /app
-ADD . /app
+ADD ./ ./
 
-RUN GO111MODULE=on go mod download
+RUN go build ./cmd/main.go
