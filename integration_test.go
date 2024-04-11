@@ -19,8 +19,8 @@ func TestConnection(t *testing.T) {
 	// Create connection object.
 	childConfMap := make(map[string]ChildSAConf)
 	childSAConf := ChildSAConf{
-		Local_ts:      []string{"10.10.59.0/24"},
-		Remote_ts:     []string{"10.10.40.0/24"},
+		LocalTs:       []string{"10.10.59.0/24"},
+		RemoteTs:      []string{"10.10.40.0/24"},
 		ESPProposals:  []string{"aes256-sha256-modp2048"},
 		StartAction:   "trap",
 		CloseAction:   "restart",
@@ -45,7 +45,7 @@ func TestConnection(t *testing.T) {
 		LocalAuth:   localAuthConf,
 		RemoteAuth:  remoteAuthConf,
 		Children:    childConfMap,
-		Encap:       "no",
+		Encap:       true,
 	}
 	ikeConfMap := map[string]IKEConf{"test-connection": ikeConf}
 
