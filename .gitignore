@@ -1,1 +1,7 @@
 *.swp
+/docker/charondata/run/charon.pid
+/docker/charondata/run/starter.charon.pid
+/.idea/.gitignore
+/.idea/goStrongswanVici.iml
+/.idea/modules.xml
+/.idea/vcs.xml

@@ -48,6 +48,5 @@ func (c *ClientConn) ListConns(ike string) (conns []map[string]IKEConf, err erro
 	if err != nil {
 		return nil, fmt.Errorf("error requesting list-conns: %v", err)
 	}
-
 	return conns, nil
 }

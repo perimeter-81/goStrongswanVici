@@ -61,8 +61,8 @@ type Child_sas struct {
 	Rekey_time    string   `json:"rekey-time"`
 	Life_time     string   `json:"life-time"`
 	Install_time  string   `json:"install-time"`
-	Local_ts      []string `json:"local-ts"`
-	Remote_ts     []string `json:"remote-ts"`
+	Local_ts      []string `json:"local_ts"`
+	Remote_ts     []string `json:"remote_ts"`
 }
 
 func (s *Child_sas) GetBytesIn() uint64 {
