@@ -11,6 +11,7 @@ type Key struct {
 	Typ    string   `json:"type"`
 	Data   string   `json:"data"`
 	Owners []string `json:"owners"`
+	Secret string   `json:"secret,omitempty"`
 }
 
 type UnloadKeyRequest struct {
@@ -61,15 +62,15 @@ func (c *ClientConn) UnloadShared(key *UnloadKeyRequest) error {
 func (c *ClientConn) GetShared() ([]string, error) {
 	msg, err := c.Request("get-shared", nil)
 	if err != nil {
-		fmt.Errorf("Error making request: %v", err)
-		return nil, err
+
+		return nil, fmt.Errorf("error making request: %w", err)
 	}
 
 	keys := &keyList{}
 
 	err = ConvertFromGeneral(msg, keys)
 	if err != nil {
-		fmt.Errorf("Error converting data: %v", err)
+		return nil, fmt.Errorf("error converting data: %w", err)
 	}
 
 	return keys.Keys, err
